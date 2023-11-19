@@ -38,6 +38,8 @@ class Menu {
         queue = new List<string>();
         curPlayers = ("", "");
         rng = new Random();
+        gamesInARow = 0;
+        lastWinner = "";
     }
 
     public void PrintOptions() {
@@ -164,6 +166,46 @@ class Menu {
                     Console.WriteLine(
                         "* {0} - {1}", curPlayers.Item2, players[curPlayers.Item2].Score
                     );
+                    if (games1 > games2) {
+                        if (curPlayers.Item1 == lastWinner) {
+                            gamesInARow++;
+                            if (gamesInARow > maxGamesWon) {
+                                Console.WriteLine(
+                                    "Winner reached max wins of {0}. Cycling", maxGamesWon
+                                );
+                                queue.Add(curPlayers.Item1);
+                                curPlayers.Item1 = queue[0];
+                                queue.RemoveAt(0);
+                                break;
+                            }
+                        } else {
+                            gamesInARow = 0;
+                            lastWinner = curPlayers.Item1;
+                        }
+                        queue.Add(curPlayers.Item2);
+                        curPlayers.Item2 = queue[0];
+                        queue.RemoveAt(0);
+                    } else {
+                        if (curPlayers.Item2 == lastWinner) {
+                            gamesInARow++;
+                            if (gamesInARow > maxGamesWon) {
+                                Console.WriteLine(
+                                    "Winner reached max wins of {0}. Cycling", maxGamesWon
+                                );
+                                queue.Add(curPlayers.Item2);
+                                curPlayers.Item2 = queue[0];
+                                queue.RemoveAt(0);
+                                break;
+                            }
+                        } else {
+                            gamesInARow = 0;
+                            lastWinner = curPlayers.Item2;
+                        }
+                        queue.Add(curPlayers.Item1);
+                        curPlayers.Item1 = curPlayers.Item2;
+                        curPlayers.Item2 = queue[0];
+                        queue.RemoveAt(0);
+                    }
                 } break;
                 case "l":
                     printQueue();
@@ -213,6 +255,8 @@ class Menu {
     private List<string> queue;
     private (string, string) curPlayers;
     private Random rng;
+    private int gamesInARow;
+    private string lastWinner;
 }
 
 partial class Program {
