@@ -22,9 +22,7 @@ Software to manage a Super Smash Bros Melee King-of-the-Hill-style tournament.
 
 ## Build
 
-It's a .NET 6 C# project, so:
-
-`dotnet compile --native --cpp`
+It's a .NET 6 C# project, so: `dotnet build` or `dotnet run`
 
 Nix users can create a shell with the necessary tools via `nix-shell`
 
